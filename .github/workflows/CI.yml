@@ -1,0 +1,61 @@
+name: ci
+
+on:
+  # 每当 push 到 master 分支时触发部署
+  push:
+    branches: [master]
+  # 手动触发部署
+  workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
+          fetch-depth: 0
+
+      - name: ⌛ 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          # 选择要使用的 node 版本
+          node-version: '14'
+
+      # 缓存 node_modules
+      - name: ⌛ 缓存依赖
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # 如果缓存没有命中，安装依赖
+      - name: ⌛ 安装依赖
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile
+
+      # 运行构建脚本
+      - name: 📦 打包构建
+        run: yarn build
+
+      - name: 🚀 部署中
+        # run: |
+        #   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        #   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          # 部署到 gh-pages 分支
+          # branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 部署目录为Vite项目的默认输出目录
+          publish_dir: ./dist
