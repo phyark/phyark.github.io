@@ -1,12 +1,8 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
     <img src="/vite.svg" class="logo" alt="Vite logo" />
   </div>
-  <HelloWorld msg="In96.top" />
+  <h1>in96.top</h1>
 </template>
 
 <style scoped>
@@ -22,5 +18,9 @@ import HelloWorld from './components/HelloWorld.vue'
 
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+h1 {
+  color: #ffffff;
+  font-family: fantasy, Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 </style>
