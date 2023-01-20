@@ -13,5 +13,6 @@ const count = ref(0);
 <style>
 h1 {
 	color: #ffffff;
+  font-family: fantasy, Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 </style>

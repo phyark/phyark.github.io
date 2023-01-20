@@ -1,5 +1,5 @@
 {
-  "name": "home",
+  "name": "phyark.github.io",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d build"
   },
+  "homepage": "https://phyark.github.io/",
   "dependencies": {
     "vue": "^3.2.45"
   },
