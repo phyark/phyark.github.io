@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://in96.top",
+  "homepage": "https://phyark.cn",
   "dependencies": {
     "vue": "^3.2.45"
   },
